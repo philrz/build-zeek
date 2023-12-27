@@ -79,6 +79,6 @@ mkdir -p zeek/bin zeek/lib/zeek zeek/share/zeek
 cp zeekrunner$exe zeek/
 cp $zeekpath/bin/zeek$exe zeek/bin/
 cp -R $zeekpath/lib/zeek/plugins zeek/lib/zeek/
-for d in base policy site; do
+for d in base policy site builtin-plugins; do
     cp -R $zeekpath/share/zeek/$d zeek/share/zeek/
 done
