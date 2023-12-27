@@ -1,4 +1,4 @@
-name: Create Release
+name: Create Zeek release
 
 on:
   workflow_dispatch:
@@ -8,31 +8,32 @@ on:
         type: string
 
 jobs:
-  runs-on: ${{ matrix.os }}
-  strategy:
-    matrix:
-      os: [macos-12, ubuntu-20.04, windows-2019]
+  release:
+    strategy:
+      matrix:
+        platform: [macos-12, ubuntu-20.04, windows-2019]
+    runs-on: ${{ matrix.platform }}
 
-  steps:
-  - name: Checkout zeek
-    uses: actions/checkout@v3
-    with:
-      repository: zeek/zeek
-      ref: ${{ inputs.tag }}
-      fetch-depth: 1
-      submodules: recursive
+    steps:
+    - name: Checkout zeek
+      uses: actions/checkout@v3
+      with:
+        repository: zeek/zeek
+        ref: ${{ inputs.tag }}
+        fetch-depth: 1
+        submodules: recursive
 
-  - name: Checkout build-zeek
-    uses: actions/checkout@v3
-    with:
-      path: build-zeek
+    - name: Checkout build-zeek
+      uses: actions/checkout@v3
+      with:
+        path: build-zeek
 
-  - name: Setup Go on Windows
-    if: startsWith(matrix.os, 'windows-')
-    uses: actions/setup-go@v3
-    with:
-      go-version-file: go.mod
-    
-  - name: Build zeekrunner for Windows
-    if: startsWith(matrix.os, 'windows-')
-    run: go build -o build-zeek/zeekrunner.exe build-zeek/zeekrunner.go
+    - name: Setup Go on Windows
+      if: startsWith(matrix.os, 'windows-')
+      uses: actions/setup-go@v3
+      with:
+        go-version-file: go.mod
+
+    - name: Build zeekrunner for Windows
+      if: startsWith(matrix.os, 'windows-')
+      run: go build -o build-zeek/zeekrunner.exe build-zeek/zeekrunner.go
