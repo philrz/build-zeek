@@ -15,6 +15,9 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
+    - name: Checkout build-zeek
+      uses: actions/checkout@v3
+
     - name: Checkout zeek
       uses: actions/checkout@v3
       with:
@@ -22,11 +25,7 @@ jobs:
         ref: ${{ inputs.tag }}
         fetch-depth: 1
         submodules: recursive
-
-    - name: Checkout build-zeek
-      uses: actions/checkout@v3
-      with:
-        path: build-zeek
+        path: zeek
 
     - name: Setup Go on Windows
       if: startsWith(matrix.platform, 'windows-')
@@ -36,4 +35,4 @@ jobs:
 
     - name: Build zeekrunner for Windows
       if: startsWith(matrix.platform, 'windows-')
-      run: go build -o build-zeek/zeekrunner.exe build-zeek/zeekrunner.go
+      run: go build -o zeekrunner.exe zeekrunner.go
