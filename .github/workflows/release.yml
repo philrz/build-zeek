@@ -26,7 +26,7 @@ jobs:
     - name: Get OS and arch detail
       run: |
         echo "GOOS=$(go env GOOS)" >> $GITHUB_OUTPUT
-        echo "GOARCH=$(go env GOARCH" >> $GITHUB_OUTPUT
+        echo "GOARCH=$(go env GOARCH)" >> $GITHUB_OUTPUT
       id: buildinfo
 
     - name: Print what the artifact name would be
