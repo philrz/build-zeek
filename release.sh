@@ -3,12 +3,15 @@
 case $(uname) in
     Darwin)
         sudo=sudo
+        zeekpath=/usr/local/zeek
         ;;
     Linux)
         sudo=sudo
+        zeekpath=/usr/local/zeek
         ;;
     *_NT-*)
         exe=.exe
+        zeekpath=/d/usr/local/zeek
         ;;
     *)
         echo "unknown OS: $(uname)" >&2
@@ -33,13 +36,13 @@ install_zeek_package() {
     package=${github_repo#*/}
     mkdir $package
     (
-        export PATH=/usr/local/zeek/bin:$PATH
+        export PATH=$zeekpath/bin:$PATH
         cd $package
         curl -sL https://github.com/$github_repo/tarball/$git_ref |
             tar -xzf - --strip-components 1
 
         script_dir=$(zkg_meta package script_dir)
-        $sudo cp -r "$script_dir" /usr/local/zeek/share/zeek/site/$package/
+        $sudo cp -r "$script_dir" $zeekpath/share/zeek/site/$package/
 
         build_command=$(zkg_meta package build_command)
         if [ "$build_command" ]; then
@@ -47,7 +50,7 @@ install_zeek_package() {
                 export LDFLAGS='-static -Wl,--allow-multiple-definition'
             fi
             sh -c "$build_command"
-            $sudo tar -xf build/*.tgz -C /usr/local/zeek/lib/zeek/plugins
+            $sudo tar -xf build/*.tgz -C $zeekpath/lib/zeek/plugins
         fi
 
         test_command=$(zkg_meta package test_command)
@@ -59,31 +62,25 @@ install_zeek_package() {
             fi
         fi
 
-        echo "@load $package" | $sudo tee -a /usr/local/zeek/share/zeek/site/local.zeek
+        echo "@load $package" | $sudo tee -a $zeekpath/share/zeek/site/local.zeek
     )
     rm -r $package
 }
 
 $sudo pip3 install btest wheel
 
-pwd
-ls -l /
-ls -l /usr
-ls -l /usr/local
-ls -lR /usr/local/zeek
-
 install_zeek_package brimsec/geoip-conn 1d5700319dd52d61273f55b4e15a9d01f29cf4bd
 install_zeek_package salesforce/hassh cfa2315257eaa972e86f7fcd694712e0d32762ff
 install_zeek_package salesforce/ja3 133f2a128b873f9c40e4e65c2b9dc372a801cf24
-echo "@load policy/protocols/conn/community-id-logging" | $sudo tee -a /usr/local/zeek/share/zeek/site/local.zeek
+echo "@load policy/protocols/conn/community-id-logging" | $sudo tee -a $zeekpath/share/zeek/site/local.zeek
 
 mv zeek zeek-src
 mkdir -p zeek/bin zeek/lib/zeek zeek/share/zeek
 cp zeekrunner$exe zeek/
-cp /usr/local/zeek/bin/zeek$exe zeek/bin/
-cp -R /usr/local/zeek/lib/zeek/plugins zeek/lib/zeek/
+cp $zeekpath/bin/zeek$exe zeek/bin/
+cp -R $zeekpath/lib/zeek/plugins zeek/lib/zeek/
 for d in base policy site; do
-    cp -R /usr/local/zeek/share/zeek/$d zeek/share/zeek/
+    cp -R $zeekpath/share/zeek/$d zeek/share/zeek/
 done
 
 # Can't use --diry with "git describe" on Windows because of the symlink
