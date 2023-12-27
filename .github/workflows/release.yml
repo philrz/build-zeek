@@ -15,6 +15,9 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
+    - name: Checkout build-zeek
+      uses: actions/checkout@v3
+
     - name: Setup Go
       uses: actions/setup-go@v3
       with:
@@ -28,9 +31,6 @@ jobs:
 
     - name: Print what the artifact name would be
       run: echo "Artifact name would be zeek-${{ inputs.tag }}-${{ steps.buildinfo.GOOS }}-${{ steps.buildinfo.GOARCH }}"
-
-    - name: Checkout build-zeek
-      uses: actions/checkout@v3
 
     - name: Checkout zeek
       uses: actions/checkout@v3
