@@ -77,7 +77,7 @@ jobs:
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
         cd zeek
-        ./configure
+        ./configure --binary-package --disable-archiver --disable-auxtools --disable-broker-tests --disable-python --disable-zeekctl --enable-static-binpac --enable-static-broker
         make -j${{ steps.cpu-cores.outputs.count }}
         sudo make install
 
