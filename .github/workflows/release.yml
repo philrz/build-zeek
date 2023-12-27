@@ -70,4 +70,4 @@ jobs:
         cd zeek
         ./configure
         make -j${{ steps.cpu-cores.outputs.count }}
-        make install
+        sudo make install
