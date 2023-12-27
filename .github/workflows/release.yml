@@ -59,10 +59,15 @@ jobs:
       if: startsWith(matrix.platform, 'macos-')
       run: brew install cmake swig openssl bison flex
 
+    - name: Get number of CPU cores
+      uses: SimenB/github-actions-cpu-cores@v1
+      id: cpu-cores
+
     - name: Build Zeek (non-Windows)
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
+        echo "Number of CPU cores detected: ${{ steps.cpu-cores.outputs.count }}"
         cd zeek
         ./configure
-        make
+        make -j${{ steps.cpu-cores.outputs.count }}
         make install
