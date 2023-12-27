@@ -48,6 +48,7 @@ jobs:
         cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX=/usr/local/zeek -G Ninja
         cmake.exe --build .
         cmake.exe --install .
+        cd
       shell: cmd
 
     - name: Install dependencies (Linux)

@@ -66,6 +66,7 @@ install_zeek_package() {
 
 $sudo pip3 install btest wheel
 
+pwd
 ls -lR /usr/local/zeek
 
 install_zeek_package brimsec/geoip-conn 1d5700319dd52d61273f55b4e15a9d01f29cf4bd
