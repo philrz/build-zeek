@@ -51,16 +51,18 @@ jobs:
         cmake.exe --install .
       shell: cmd
 
+    - name: Install dependencies (Linux)
+      if: startsWith(matrix.platform, 'ubuntu-')
+      run: apt install cmake make gcc g++ flex libfl-dev bison libpcap-dev libssl-dev python3 python3-dev swig zlib1g-dev
+
+    - name: Install dependencies (macOS)
+      if startsWith(matrix.platform, 'macos-')
+      run: brew install cmake swig openssl bison flex
+
     - name: Build Zeek (non-Windows)
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
-        mkdir zeek/build
-        cd zeek/build
-        cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX=/usr/local/zeek -G Ninja
-        cmake.exe --build .
-        cmake.exe --install .
-
-#        cd zeek
-#        ./configure
-#        make
-#        make install
+        cd zeek
+        ./configure
+        make
+        make install
