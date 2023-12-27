@@ -27,7 +27,7 @@ jobs:
       id: buildinfo
 
     - name: Print what the artifact name would be
-      run: echo "Artifact name would be: zeek-${{ inputs.tag }}-${{ steps.buildinfo.GOOS }}-${{ steps.buildinfo.GOARCH }}"
+      run: echo "Artifact name would be zeek-${{ inputs.tag }}-${{ steps.buildinfo.GOOS }}-${{ steps.buildinfo.GOARCH }}"
 
     - name: Checkout build-zeek
       uses: actions/checkout@v3
