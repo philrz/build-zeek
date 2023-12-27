@@ -27,10 +27,11 @@ jobs:
       run: |
         echo "GOOS=$(go env GOOS)" >> $GITHUB_OUTPUT
         echo "GOARCH=$(go env GOARCH)" >> $GITHUB_OUTPUT
+      shell: bash
       id: buildinfo
 
     - name: Print what the artifact name would be
-      run: echo "Artifact name would be zeek-${{ inputs.tag }}-${{ steps.buildinfo.GOOS }}-${{ steps.buildinfo.GOARCH }}"
+      run: echo "Artifact name would be zeek-${{ inputs.tag }}-${{ steps.buildinfo.outputs.GOOS }}-${{ steps.buildinfo.outputs.GOARCH }}"
 
     - name: Checkout zeek
       uses: actions/checkout@v3
@@ -88,4 +89,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: zeek
-        name: zeek-${{ inputs.tag }}-${{ steps.buildinfo.GOOS }}-${{ steps.buildinfo.GOARCH }}
+        name: zeek-${{ inputs.tag }}-${{ steps.buildinfo.outputs.GOOS }}-${{ steps.buildinfo.outputs.GOARCH }}
