@@ -69,7 +69,7 @@ $sudo pip3 install btest wheel
 install_zeek_package brimsec/geoip-conn 1d5700319dd52d61273f55b4e15a9d01f29cf4bd
 install_zeek_package salesforce/hassh cfa2315257eaa972e86f7fcd694712e0d32762ff
 install_zeek_package salesforce/ja3 133f2a128b873f9c40e4e65c2b9dc372a801cf24
-echo "@load policy/protocols/conn/community-id-logging" >> /usr/local/zeek/share/zeek/site/local.zeek
+echo "@load policy/protocols/conn/community-id-logging" | $sudo tee -a /usr/local/zeek/share/zeek/site/local.zeek
 
 mv zeek zeek-src
 mkdir -p zeek/bin zeek/lib/zeek zeek/share/zeek
@@ -82,4 +82,4 @@ done
 
 # Can't use --diry with "git describe" on Windows because of the symlink
 # shenanigans.
-zip -r zeek-$(git describe --always --tags).$(go env GOOS)-$(go env GOARCH).zip zeek
+zip -r zeek-taghere.$(go env GOOS)-$(go env GOARCH).zip zeek
