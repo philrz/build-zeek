@@ -82,7 +82,3 @@ cp -R $zeekpath/lib/zeek/plugins zeek/lib/zeek/
 for d in base policy site; do
     cp -R $zeekpath/share/zeek/$d zeek/share/zeek/
 done
-
-# Can't use --diry with "git describe" on Windows because of the symlink
-# shenanigans.
-zip -r zeek-taghere.$(go env GOOS)-$(go env GOARCH).zip zeek
