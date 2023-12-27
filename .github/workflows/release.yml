@@ -29,11 +29,11 @@ jobs:
         path: build-zeek
 
     - name: Setup Go on Windows
-      if: startsWith(matrix.os, 'windows-')
+      if: startsWith(matrix.platform, 'windows-')
       uses: actions/setup-go@v3
       with:
         go-version-file: go.mod
 
     - name: Build zeekrunner for Windows
-      if: startsWith(matrix.os, 'windows-')
+      if: startsWith(matrix.platform, 'windows-')
       run: go build -o build-zeek/zeekrunner.exe build-zeek/zeekrunner.go
