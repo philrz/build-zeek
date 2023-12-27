@@ -69,9 +69,8 @@ install_zeek_package() {
 
 $sudo pip3 install btest wheel
 
-install_zeek_package brimsec/geoip-conn 1d5700319dd52d61273f55b4e15a9d01f29cf4bd
-install_zeek_package salesforce/hassh cfa2315257eaa972e86f7fcd694712e0d32762ff
-install_zeek_package salesforce/ja3 133f2a128b873f9c40e4e65c2b9dc372a801cf24
+install_zeek_package salesforce/hassh 76a47abe9382109ce9ba530e7f1d7014a4a95209
+install_zeek_package salesforce/ja3 421dd4f3616b533e6971bb700289c6bb8355e707
 echo "@load policy/protocols/conn/community-id-logging" | $sudo tee -a $zeekpath/share/zeek/site/local.zeek
 
 mv zeek zeek-src

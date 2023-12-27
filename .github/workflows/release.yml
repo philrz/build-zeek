@@ -15,6 +15,20 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
+    - name: Setup Go
+      uses: actions/setup-go@v3
+      with:
+        go-version-file: go.mod
+
+    - name: Get OS and arch detail
+      run: |
+        echo "GOOS=$(go env GOOS)" >> $GITHUB_OUTPUT
+        echo "GOARCH=$(go env GOARCH" >> $GITHUB_OUTPUT
+      id: buildinfo
+
+    - name: Print what the artifact name would be:
+      run: echo "Artifact name would be: zeek-${{ inputs.tag }}-${{ steps.buildinfo.GOOS }}-${{ steps.buildinfo.GOARCH }}"
+
     - name: Checkout build-zeek
       uses: actions/checkout@v3
 
@@ -26,11 +40,6 @@ jobs:
         fetch-depth: 1
         submodules: recursive
         path: zeek
-
-    - name: Setup Go
-      uses: actions/setup-go@v3
-      with:
-        go-version-file: go.mod
 
     - name: Build zeekrunner (Windows)
       if: startsWith(matrix.platform, 'windows-')
@@ -79,4 +88,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: zeek
-        name: zeek-${{ inputs.tag }}-${{ matrix.platform }}
+        name: zeek-${{ inputs.tag }}-${{ steps.buildinfo.GOOS }}-${{ steps.buildinfo.GOARCH }}
