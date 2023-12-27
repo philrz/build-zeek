@@ -27,8 +27,7 @@ jobs:
         submodules: recursive
         path: zeek
 
-    - name: Setup Go (Windows)
-      if: startsWith(matrix.platform, 'windows-')
+    - name: Setup Go
       uses: actions/setup-go@v3
       with:
         go-version-file: go.mod
