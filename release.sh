@@ -35,7 +35,7 @@ install_zeek_package() {
     (
         export PATH=/usr/local/zeek/bin:$PATH
         cd $package
-        wget -qO - https://github.com/$github_repo/tarball/$git_ref |
+        curl -sL https://github.com/$github_repo/tarball/$git_ref |
             tar -xzf - --strip-components 1
 
         script_dir=$(zkg_meta package script_dir)
