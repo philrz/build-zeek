@@ -54,7 +54,13 @@ jobs:
     - name: Build Zeek (non-Windows)
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
-        cd zeek
-        ./configure
-        make
-        make install
+        mkdir zeek/build
+        cd zeek/build
+        cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX=/usr/local/zeek -G Ninja
+        cmake.exe --build .
+        cmake.exe --install .
+
+#        cd zeek
+#        ./configure
+#        make
+#        make install
