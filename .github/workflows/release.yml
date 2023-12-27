@@ -27,12 +27,34 @@ jobs:
         submodules: recursive
         path: zeek
 
-    - name: Setup Go on Windows
+    - name: Setup Go (Windows)
       if: startsWith(matrix.platform, 'windows-')
       uses: actions/setup-go@v3
       with:
         go-version-file: go.mod
 
-    - name: Build zeekrunner for Windows
+    - name: Build zeekrunner (Windows)
       if: startsWith(matrix.platform, 'windows-')
       run: go build -o zeekrunner.exe zeekrunner.go
+
+    - name: Build Zeek (Windows)
+      if: startsWith(matrix.platform, 'windows-')
+      run: |
+        choco install -y --no-progress conan --version=1.58.0
+        choco install -y --no-progress winflexbison3
+        call refreshenv
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
+        mkdir zeek/build
+        cd zeek/build
+        cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX=/usr/local/zeek -G Ninja
+        cmake.exe --build .
+        cmake.exe --install .
+      shell: cmd
+
+    - name: Build Zeek (non-Windows)
+      if: "!startsWith(matrix.platform, 'windows-')"
+      run: |
+        cd zeek
+        ./configure
+        make
+        make install
