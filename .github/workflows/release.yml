@@ -54,12 +54,13 @@ jobs:
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
         curl -L https://github.com/maxmind/libmaxminddb/releases/download/1.8.0/libmaxminddb-1.8.0.tar.gz | tar xzvf -
-        sed -i.bak "/typedef ADDRESS_FAMILY sa_family_t/d" libmaxminddb-1.8.0\include\maxminddb.h
         mkdir libmaxminddb-1.8.0\build
         cd libmaxminddb-1.8.0\build
         cmake ..
         cmake --build .
         cmake --build . --target install
+        rename "C:\Program Files (x86)\maxminddb\include\maxminddb.h" "C:\Program Files (x86)\maxminddb\include\maxminddb.h.bak"
+        sed "/typedef ADDRESS_FAMILY sa_family_t/d" "C:\Program Files (x86)\maxminddb\include\maxminddb.h.bak" > "C:\Program Files (x86)\maxminddb\include\maxminddb.h"
       shell: cmd
 
     - name: Build Zeek (Windows)
