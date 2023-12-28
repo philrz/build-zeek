@@ -41,7 +41,7 @@ jobs:
 
     - name: Build libmaxminddb (Windows)
       if: startsWith(matrix.platform, 'windows-')
-      run:
+      run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
         curl -L https://github.com/maxmind/libmaxminddb/releases/download/1.8.0/libmaxminddb-1.8.0.tar.gz | tar xzvf -
         mkdir libmaxminddb-1.8.0\build
