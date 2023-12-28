@@ -115,6 +115,7 @@ jobs:
         path: zeek-*.zip
 
     - name: Publish artifact as release
+      if: startsWith(inputs.release_tag, 'v')
       uses: svenstaro/upload-release-action@2.7.0
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
