@@ -39,7 +39,7 @@ jobs:
       if: startsWith(matrix.platform, 'windows-')
       run: go build -o zeekrunner.exe zeekrunner.go
 
-    - nane: Build libmaxminddb (Windows)
+    - name: Build libmaxminddb (Windows)
       if: startsWith(matrix.platform, 'windows-')
       run:
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
@@ -77,7 +77,7 @@ jobs:
       uses: SimenB/github-actions-cpu-cores@v1
       id: cpu-cores
 
-    - name: Build Zeek (non-Windows)
+    - name: Build Zeek (Linux/macOS)
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
         cd zeek
