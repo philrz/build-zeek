@@ -100,6 +100,7 @@ jobs:
         ./configure --binary-package --enable-static-broker --enable-static-binpac --disable-spicy --disable-af-packet
         make -j${{ steps.cpu-cores.outputs.count }}
         sudo make install
+        sudo strip /usr/local/zeek/bin/zeek
 
     - name: Finish packaging release
       run: ./release.sh
