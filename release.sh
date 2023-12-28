@@ -85,4 +85,4 @@ for d in base policy site builtin-plugins; do
     cp -R $zeekpath/share/zeek/$d zeek/share/zeek/
 done
 
-$zip -r zeek-taghere.$(go env GOOS)-$(go env GOARCH).zip zeek
+$zip -r zeek-$RELEASE_TAG.$(go env GOOS)-$(go env GOARCH).zip zeek
