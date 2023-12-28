@@ -59,7 +59,7 @@ jobs:
         cmake ..
         cmake --build .
         cmake --build . --target install
-        rename "C:\Program Files (x86)\maxminddb\include\maxminddb.h" "C:\Program Files (x86)\maxminddb\include\maxminddb.h.bak"
+        rename "C:\Program Files (x86)\maxminddb\include\maxminddb.h" maxminddb.h.bak
         sed "/typedef ADDRESS_FAMILY sa_family_t/d" "C:\Program Files (x86)\maxminddb\include\maxminddb.h.bak" > "C:\Program Files (x86)\maxminddb\include\maxminddb.h"
       shell: cmd
 
