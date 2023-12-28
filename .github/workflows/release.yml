@@ -49,6 +49,7 @@ jobs:
         cmake ..
         cmake --build .
         cmake --build . --target install
+      shell: cmd
 
     - name: Build Zeek (Windows)
       if: startsWith(matrix.platform, 'windows-')
