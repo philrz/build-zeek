@@ -59,13 +59,9 @@ jobs:
         cmake ..
         cmake --build .
         cmake --build . --target install
+        sed -i.bak "/typedef ADDRESS_FAMILY sa_family_t/d" "C:\Program Files (x86)\maxminddb\include\maxminddb.h"
       shell: cmd
 
-    #
-    # The following is currently withheld from the cmake command line pending a unistd-related build error it triggers:
-    #
-    # -DLibMMDB_INCLUDE_DIR="C:\Program Files (x86)\maxminddb\include" -DLibMMDB_LIBRARY="C:\Program Files (x86)\maxminddb\lib\maxminddb.lib"
-    #
     - name: Build Zeek (Windows)
       if: startsWith(matrix.platform, 'windows-')
       run: |
@@ -75,7 +71,7 @@ jobs:
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
         mkdir zeek\build
         cd zeek\build
-        cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX=/usr/local/zeek -G Ninja
+        cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX=/usr/local/zeek -DLibMMDB_INCLUDE_DIR="C:\Program Files (x86)\maxminddb\include" -DLibMMDB_LIBRARY="C:\Program Files (x86)\maxminddb\lib\maxminddb.lib" -G Ninja
         cmake.exe --build .
         cmake.exe --install .
         cd
