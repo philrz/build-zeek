@@ -97,9 +97,10 @@ jobs:
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
         cd zeek
-        ./configure --binary-package --enable-static-broker --enable-static-binpac --disable-spicy --disable-af-packet
+        ./configure --binary-package --enable-static-broker --enable-static-binpac --disable-spicy --disable-af-packet --osx-min-version=12
         make -j${{ steps.cpu-cores.outputs.count }}
         sudo make install
+        sudo strip /usr/local/zeek/bin/zeek
 
     - name: Finish packaging release
       run: ./release.sh
