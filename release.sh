@@ -1,12 +1,7 @@
 #!/bin/sh -ex
 
 case $(uname) in
-    Darwin)
-        sudo=sudo
-        zip=zip
-        zeekpath=/usr/local/zeek
-        ;;
-    Linux)
+    Darwin|Linux)
         sudo=sudo
         zip=zip
         zeekpath=/usr/local/zeek
