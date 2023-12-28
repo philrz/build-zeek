@@ -70,7 +70,7 @@ jobs:
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
         cd zeek
-        ./configure --enable-static-broker --enable-static-binpac
+        ./configure --binary-package --enable-static-broker --enable-static-binpac
         make -j${{ steps.cpu-cores.outputs.count }}
         sudo make install
 
