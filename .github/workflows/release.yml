@@ -23,16 +23,6 @@ jobs:
       with:
         go-version-file: go.mod
 
-    - name: Get OS and arch detail
-      run: |
-        echo "GOOS=$(go env GOOS)" >> $GITHUB_OUTPUT
-        echo "GOARCH=$(go env GOARCH)" >> $GITHUB_OUTPUT
-      shell: bash
-      id: buildinfo
-
-    - name: Print what the artifact name would be
-      run: echo "Artifact name would be zeek-${{ inputs.tag }}-${{ steps.buildinfo.outputs.GOOS }}-${{ steps.buildinfo.outputs.GOARCH }}"
-
     - name: Checkout zeek
       uses: actions/checkout@v3
       with:
@@ -77,7 +67,7 @@ jobs:
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
         cd zeek
-        ./configure --binary-package --disable-archiver --disable-auxtools --disable-broker-tests --disable-python --disable-zeekctl --enable-static-binpac --enable-static-broker
+        ./configure --enable-static-broker
         make -j${{ steps.cpu-cores.outputs.count }}
         sudo make install
 
@@ -89,4 +79,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: zeek
-        name: zeek-${{ inputs.tag }}-${{ steps.buildinfo.outputs.GOOS }}-${{ steps.buildinfo.outputs.GOARCH }}
+        name: zeek-*.zip

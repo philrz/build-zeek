@@ -3,14 +3,17 @@
 case $(uname) in
     Darwin)
         sudo=sudo
+        zip=zip
         zeekpath=/usr/local/zeek
         ;;
     Linux)
         sudo=sudo
+        zip=zip
         zeekpath=/usr/local/zeek
         ;;
     *_NT-*)
         exe=.exe
+        zip=/c/msys64/usr/bin/zip
         zeekpath=/d/usr/local/zeek
         ;;
     *)
@@ -81,3 +84,5 @@ cp -R $zeekpath/lib/zeek/plugins zeek/lib/zeek/
 for d in base policy site builtin-plugins; do
     cp -R $zeekpath/share/zeek/$d zeek/share/zeek/
 done
+
+$zip -r zeek-taghere.$(go env GOOS)-$(go env GOARCH).zip zeek
