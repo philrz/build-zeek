@@ -59,7 +59,7 @@ jobs:
         cmake ..
         cmake --build .
         cmake --build . --target install
-        sed -i.bak "/typedef ADDRESS_FAMILY sa_family_t/d" "C:\Program Files (x86)\maxminddb\include\maxminddb.h"
+        sed -i "/typedef ADDRESS_FAMILY sa_family_t/d" "C:\Program Files (x86)\maxminddb\include\maxminddb.h"
       shell: cmd
 
     - name: Build Zeek (Windows)
