@@ -97,7 +97,7 @@ jobs:
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
         cd zeek
-        ./configure --binary-package --enable-static-broker --enable-static-binpac --disable-spicy --disable-af-packet --disable-zeekctl --disable-python  --osx-min-version=12
+        ./configure --binary-package --enable-static-broker --enable-static-binpac --disable-spicy --disable-af-packet --disable-zeekctl --disable-python --disable-broker-tests --osx-min-version=12
         make -j${{ steps.cpu-cores.outputs.count }}
         sudo make install
         sudo strip /usr/local/zeek/bin/zeek
