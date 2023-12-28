@@ -6,7 +6,7 @@ on:
       zeek_ref:
         required: false
         type: string
-        default: 'main'
+        default: 'master'
       build_zeek_ref:
         required: false
         type: string
