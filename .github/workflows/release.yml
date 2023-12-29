@@ -49,22 +49,18 @@ jobs:
       if: startsWith(matrix.platform, 'windows-')
       run: go build -o zeekrunner.exe zeekrunner.go
 
-    - name: Checkout libmaxminddb (Windows)
-      if: startsWith(matrix.platform, 'windows-')
-      uses: actions/checkout@v3
-      with:
-        repository: brimdata/libmaxminddb
-        ref: windows-sa_family_t
-
     - name: Build libmaxminddb (Windows)
       if: startsWith(matrix.platform, 'windows-')
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
-        mkdir libmaxminddb\build
-        cd libmaxminddb\build
+        curl -L https://github.com/maxmind/libmaxminddb/releases/download/1.8.0/libmaxminddb-1.8.0.tar.gz | tar xzvf -
+        mkdir libmaxminddb-1.8.0\build
+        cd libmaxminddb-1.8.0\build
         cmake ..
         cmake --build .
         cmake --build . --target install
+        rename "C:\Program Files (x86)\maxminddb\include\maxminddb.h" maxminddb.h.bak
+        sed "/typedef ADDRESS_FAMILY sa_family_t/d" "C:\Program Files (x86)\maxminddb\include\maxminddb.h.bak" > "C:\Program Files (x86)\maxminddb\include\maxminddb.h"
       shell: cmd
 
     - name: Build Zeek (Windows)
