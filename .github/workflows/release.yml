@@ -55,6 +55,7 @@ jobs:
       with:
         repository: brimdata/libmaxminddb
         ref: windows-sa_family_t
+        path: libmaxminddb
 
     - name: Build libmaxminddb (Windows)
       if: startsWith(matrix.platform, 'windows-')
