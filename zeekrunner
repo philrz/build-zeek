@@ -10,5 +10,5 @@ export ZEEK_PLUGIN_PATH=$dir/lib/zeek/plugins
 # of capture.
 exec "$dir/bin/zeek" \
   -C -r - \
-  --exec "event zeek_init() { Log::disable_stream(PacketFilter::LOG); Log::disable_stream(LoadedScripts::LOG); }" \
+  --exec "event zeek_init() { Log::disable_stream(PacketFilter::LOG); Log::disable_stream(LoadedScripts::LOG); Log::disable_stream(Telemetry::LOG); Log::disable_stream(CaptureLoss::LOG); Log::disable_stream(Stats::LOG); Log::disable_stream(Reporter::LOG); }" \
   local
