@@ -72,7 +72,7 @@ jobs:
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
         mkdir zeek-src\build
         cd zeek-src\build
-        cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX=/usr/local/zeek -DLibMMDB_INCLUDE_DIR="C:\Program Files (x86)\maxminddb\include" -DLibMMDB_LIBRARY="C:\Program Files (x86)\maxminddb\lib\maxminddb.lib" -G Ninja
+        cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX="C:\Program Files\Git\usr\local\zeek" -DLibMMDB_INCLUDE_DIR="C:\Program Files (x86)\maxminddb\include" -DLibMMDB_LIBRARY="C:\Program Files (x86)\maxminddb\lib\maxminddb.lib" -G Ninja
         cmake.exe --build .
         cmake.exe --install .
         cd

@@ -4,12 +4,10 @@ case $(uname) in
     Darwin|Linux)
         sudo=sudo
         zip=zip
-        zeekpath=/usr/local/zeek
         ;;
     *_NT-*)
         exe=.exe
         zip=/c/msys64/usr/bin/zip
-        zeekpath=/d/usr/local/zeek
         ;;
     *)
         echo "unknown OS: $(uname)" >&2
@@ -34,13 +32,13 @@ install_zeek_package() {
     package=${github_repo#*/}
     mkdir $package
     (
-        export PATH=$zeekpath/bin:$PATH
+        export PATH=/usr/local/zeek/bin:$PATH
         cd $package
         curl -sL https://github.com/$github_repo/tarball/$git_ref |
             tar -xzf - --strip-components 1
 
         script_dir=$(zkg_meta package script_dir)
-        $sudo cp -r "$script_dir" $zeekpath/share/zeek/site/$package/
+        $sudo cp -r "$script_dir" /usr/local/zeek/share/zeek/site/$package/
 
         build_command=$(zkg_meta package build_command)
         if [ "$build_command" ]; then
@@ -48,7 +46,7 @@ install_zeek_package() {
                 export LDFLAGS='-static -Wl,--allow-multiple-definition'
             fi
             sh -c "$build_command"
-            $sudo tar -xf build/*.tgz -C $zeekpath/lib/zeek/plugins
+            $sudo tar -xf build/*.tgz -C /usr/local/zeek/lib/zeek/plugins
         fi
 
         test_command=$(zkg_meta package test_command)
@@ -60,7 +58,7 @@ install_zeek_package() {
             fi
         fi
 
-        echo "@load $package" | $sudo tee -a $zeekpath/share/zeek/site/local.zeek
+        echo "@load $package" | $sudo tee -a /usr/local/zeek/share/zeek/site/local.zeek
     )
     rm -r $package
 }
@@ -70,14 +68,14 @@ $sudo pip3 install btest wheel
 install_zeek_package brimdata/geoip-conn c9dd7f0f8d40573189b2ed2bae9fad478743cfdf
 install_zeek_package salesforce/hassh 76a47abe9382109ce9ba530e7f1d7014a4a95209
 install_zeek_package salesforce/ja3 421dd4f3616b533e6971bb700289c6bb8355e707
-echo "@load policy/protocols/conn/community-id-logging" | $sudo tee -a $zeekpath/share/zeek/site/local.zeek
+echo "@load policy/protocols/conn/community-id-logging" | $sudo tee -a /usr/local/zeek/share/zeek/site/local.zeek
 
 mkdir -p zeek/bin zeek/lib/zeek zeek/share/zeek
 cp zeekrunner$exe zeek/
-cp $zeekpath/bin/zeek$exe zeek/bin/
-cp -R $zeekpath/lib/zeek/plugins zeek/lib/zeek/
+cp /usr/local/zeek/bin/zeek$exe zeek/bin/
+cp -R /usr/local/zeek/lib/zeek/plugins zeek/lib/zeek/
 for d in base policy site builtin-plugins; do
-    cp -R $zeekpath/share/zeek/$d zeek/share/zeek/
+    cp -R /usr/local/zeek/share/zeek/$d zeek/share/zeek/
 done
 
 $zip -r zeek-$RELEASE_TAG.$(go env GOOS)-$(go env GOARCH).zip zeek
