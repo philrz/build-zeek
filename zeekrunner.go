@@ -42,9 +42,6 @@ event zeek_init() {
        Log::disable_stream(PacketFilter::LOG);
        Log::disable_stream(LoadedScripts::LOG);
        Log::disable_stream(Telemetry::LOG);
-       Log::disable_stream(CaptureLoss::LOG);
-       Log::disable_stream(Stats::LOG);
-       Log::disable_stream(Reporter::LOG);
 }`
 
 func launchZeek(zdepsZeekDir, zeekExecPath string) error {
