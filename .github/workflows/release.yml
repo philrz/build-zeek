@@ -43,7 +43,7 @@ jobs:
         ref: ${{ inputs.zeek_ref }}
         fetch-depth: 1
         submodules: recursive
-        path: zeek
+        path: zeek-src
 
     - name: Build zeekrunner (Windows)
       if: startsWith(matrix.platform, 'windows-')
@@ -70,8 +70,8 @@ jobs:
         choco install -y --no-progress winflexbison3
         call refreshenv
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64
-        mkdir zeek\build
-        cd zeek\build
+        mkdir zeek-src\build
+        cd zeek-src\build
         cmake.exe .. -DCMAKE_BUILD_TYPE=release -DENABLE_ZEEK_UNIT_TESTS=yes -D CMAKE_INSTALL_PREFIX=/usr/local/zeek -DLibMMDB_INCLUDE_DIR="C:\Program Files (x86)\maxminddb\include" -DLibMMDB_LIBRARY="C:\Program Files (x86)\maxminddb\lib\maxminddb.lib" -G Ninja
         cmake.exe --build .
         cmake.exe --install .
@@ -93,7 +93,7 @@ jobs:
     - name: Build Zeek (Linux/macOS)
       if: "!startsWith(matrix.platform, 'windows-')"
       run: |
-        cd zeek
+        cd zeek-src
         ./configure --binary-package --enable-static-broker --enable-static-binpac --disable-spicy --disable-af-packet --disable-zeekctl --disable-python --disable-broker-tests --disable-auxtools --disable-archiver --osx-min-version=12
         make -j${{ steps.cpu-cores.outputs.count }}
         sudo make install

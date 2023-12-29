@@ -72,7 +72,6 @@ install_zeek_package salesforce/hassh 76a47abe9382109ce9ba530e7f1d7014a4a95209
 install_zeek_package salesforce/ja3 421dd4f3616b533e6971bb700289c6bb8355e707
 echo "@load policy/protocols/conn/community-id-logging" | $sudo tee -a $zeekpath/share/zeek/site/local.zeek
 
-mv zeek zeek-src
 mkdir -p zeek/bin zeek/lib/zeek zeek/share/zeek
 cp zeekrunner$exe zeek/
 cp $zeekpath/bin/zeek$exe zeek/bin/
