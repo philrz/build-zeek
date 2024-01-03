@@ -82,7 +82,6 @@ echo "@load policy/protocols/conn/community-id-logging" | $sudo tee -a /usr/loca
 mkdir -p zeek/bin zeek/lib/zeek zeek/share/zeek
 cp zeekrunner$exe zeek/
 cp /usr/local/zeek/bin/zeek$exe zeek/bin/
-cp -R zeek/lib/zeek/
 for d in base policy site builtin-plugins; do
     cp -R /usr/local/zeek/share/zeek/$d zeek/share/zeek/
 done
