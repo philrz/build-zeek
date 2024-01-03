@@ -1,4 +1,4 @@
-name: Build Zeek
+name: Build/release Zeek
 
 on:
   pull_request:
@@ -93,7 +93,7 @@ jobs:
         sudo strip /usr/local/zeek/bin/zeek
 
     - name: Finish packaging artifact
-      run: ./build.sh
+      run: ./release.sh
       shell: sh
 
     - name: Upload artifact
