@@ -17,7 +17,7 @@ jobs:
   release:
     strategy:
       matrix:
-        platform: [macos-12, ubuntu-20.04]
+        platform: [macos-12, ubuntu-20.04, windows-2019]
     runs-on: ${{ matrix.platform }}
 
     steps:
